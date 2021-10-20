@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.example.stage">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+    <!--     Android11新增-->
+    <!--    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name=" android。permission. READ_ CONTACTS" />-->
+
+
+    <application
+            android:allowBackup="true"
+            android:icon="@drawable/icon"
+            android:label="网抑云音乐"
+            android:roundIcon="@drawable/icon"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.Stage">
+        <activity
+                android:name=".MainActivity"
+                android:exported="true">
+
+        </activity>
+        <activity
+                android:name=".login.LogIn"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
