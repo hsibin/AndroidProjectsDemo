@@ -4,12 +4,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "stage"
 include ':app'
-include ':wandr'
-include ':music'
 include ':datadeal'
 include ':actionbar'
 include ':switchconton'

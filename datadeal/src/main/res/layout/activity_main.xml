@@ -7,24 +7,44 @@
         tools:context=".MainActivity"
         android:orientation="vertical">
 
-    <EditText
-            android:id="@+id/word"
-            android:textSize="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:inputType="text"
-            tools:ignore="MissingConstraints" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="学生信息添加表" />
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="10dp" />
 
-    <TextView
-            android:id="@+id/show"
-            android:textSize="20dp"
+    <EditText
+            android:id="@+id/snum"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="40dp"
+            android:hint="学号"
+            android:inputType="text" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+    <EditText
+            android:id="@+id/sname"
+            android:hint="姓名"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+    <EditText
+            android:id="@+id/sage"
+            android:hint="年龄"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -33,18 +53,18 @@
 
         <Button
                 android:textSize="25dp"
-                android:text="翻译"
+                android:text="添加"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn1"
+                android:id="@+id/btn_add"
                 tools:ignore="MissingConstraints" />
 
         <Button
                 android:textSize="25dp"
-                android:text="添加"
+                android:text="查询"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn2"
+                android:id="@+id/btn_select"
                 tools:ignore="MissingConstraints" />
 
 

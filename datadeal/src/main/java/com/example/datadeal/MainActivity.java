@@ -1,85 +1,105 @@
 package com.example.datadeal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.datadeal.data.Sqlite;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.example.datadeal.database.DBHelper;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "hsibin";
-    private Sqlite dbManager;
+    public static DBHelper dbHelper;
 
-    private EditText edit;
-    private TextView text;
-    private Button bt1;
-    private Button bt2;
-
-    protected void initView() {
-        EditText edit = findViewById(R.id.word);
-        TextView text = findViewById(R.id.show);
-        Button bt1 = findViewById(R.id.btn1);
-        Button bt2 = findViewById(R.id.btn2);
-    }
+    private EditText snum;
+    private EditText sname;
+    private EditText sage;
+    private Button addBtn;
+    private Button selBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+        dbHelper = new DBHelper(MainActivity.this, "student.db", null, 1);
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        Log.i(TAG, "onCreate: Main使用了");
 
-        dbManager = new Sqlite(this, "first.db", null, 1);
-        initView();
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    dbInsert(sqLiteDatabase);
+                } catch (SQLiteConstraintException e) {
+                    Toast.makeText(MainActivity.this, "重复添加，检查输入", Toast.LENGTH_SHORT).show();
 
-
-    }
-
-    protected void onClick(int id) {
-        switch (id) {
-            case R.id.btn1:
-                String key = edit.getText().toString();
-                Cursor cursor;
-                cursor = dbManager.getReadableDatabase().query(
-                        "tb.dict", null, "word=?", new String[]{key},
-                        null, null, null);
-                ArrayList<Map<String, String>> res = new ArrayList<>();
-                while (cursor.moveToNext()) {
-                    Map<String, String> map = new HashMap<>();
-                    map.put("word", cursor.getString(1));
-                    map.put("interpret", cursor.getString(2));
-                    res.add(map);
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "空数据，检查输入", Toast.LENGTH_SHORT).show();
                 }
-                if (res == null || res.size() == 0)
-                    Toast.makeText(this, "没有记录", Toast.LENGTH_SHORT).show();
-                else {
-                    text.setText(res.get(0).get("interpret"));
-                }
-                break;
-            case R.id.btn2:
-                Intent intent = new Intent(MainActivity.this, AppCompatActivity.class);
+                Toast.makeText(MainActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        selBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResList.class);
                 startActivity(intent);
-                break;
-        }
+            }
+        });
+
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (dbManager != null) {
-            dbManager.close();
-        }
+    //初始化view
+    protected void init() {
+        snum = findViewById(R.id.snum);
+        sname = findViewById(R.id.sname);
+        sage = findViewById(R.id.sage);
+        addBtn = findViewById(R.id.btn_add);
+        selBtn = findViewById(R.id.btn_select);
     }
+
+    //插入方法
+    protected void dbInsert(SQLiteDatabase db) {
+        Integer snumnew = null;
+        try {
+            snumnew = Integer.parseInt(snum.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(MainActivity.this, "学号为数字，检查输入", Toast.LENGTH_SHORT).show();
+
+        }
+        String snamenew = sname.getText().toString();
+        int sagenew = 0;
+        try {
+            sagenew = Integer.parseInt(sage.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(MainActivity.this, "年龄为数字，检查输入", Toast.LENGTH_SHORT).show();
+
+        }
+
+        ContentValues values = new ContentValues();
+        values.put("snum", snumnew);
+        values.put("sname", snamenew);
+        values.put("sage", sagenew);
+        db.insert("student", "snum", values);
+
+        values.clear();
+    }
+
+    //删除方法
+    protected void dbDelete(SQLiteDatabase db) {
+        db.delete("student", "snum=?", new String[]{"2021"});
+    }
+
 }

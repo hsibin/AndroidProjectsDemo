@@ -13,9 +13,7 @@
             <option value="$PROJECT_DIR$/actionbar" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/datadeal" />
-            <option value="$PROJECT_DIR$/music" />
             <option value="$PROJECT_DIR$/switchconton" />
-            <option value="$PROJECT_DIR$/wandr" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
